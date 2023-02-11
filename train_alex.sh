@@ -7,6 +7,7 @@
 unset SLURM_EXPORT_ENV
 
 module load python
+module load cuda
 
 source activate detrex
 
@@ -17,9 +18,14 @@ cp -r /home/woody/iwi5/iwi5064h/detrex .
 
 cd detrex
 
+pip install -e detectron2
+pip install -e .
+
 tar xf /home/janus/iwi5-datasets/odor/odor3.tar
 
-export DETECTRON2_DATASETS=./data/ODOR-v3/
+mv coco-style coco
+
+export DETECTRON2_DATASETS=.
 
 python tools/train_net.py --config-file projects/dino/configs/odor3_fn_l_lrf_384_fl4_5scale_50ep.py
 
