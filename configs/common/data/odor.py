@@ -7,7 +7,7 @@ from detectron2.config import LazyCall as L
 from detectron2.data import (
     build_detection_test_loader,
     build_detection_train_loader,
-    get_detection_dataset_dicts,
+    get_detection_dataset_dicts, DatasetCatalog, MetadataCatalog,
 )
 from detectron2.data.datasets import register_coco_instances
 from detectron2.evaluation import COCOEvaluator
@@ -74,3 +74,6 @@ dataloader.test = L(build_detection_test_loader)(
 dataloader.evaluator = L(COCOEvaluator)(
     dataset_name="${..test.dataset.names}",
 )
+
+for split in ['train', 'test']:
+    MetadataCatalog.get(f'odor_{split}').thing_classes = ["abc,def"]
