@@ -1,4 +1,5 @@
 import itertools
+import json
 
 from omegaconf import OmegaConf
 
@@ -11,6 +12,7 @@ from detectron2.data import (
 )
 from detectron2.data.datasets import register_coco_instances
 from detectron2.evaluation import COCOEvaluator
+from detectron2.structures import BoxMode
 
 from detrex.data import DetrDatasetMapper
 
@@ -75,5 +77,39 @@ dataloader.evaluator = L(COCOEvaluator)(
     dataset_name="${..test.dataset.names}",
 )
 
+
+def get_odor_dict(split):
+    if split == 'train':
+        pth = 'data/ODOR-v3/coco-style/annotations/instances_train2017.json'
+    elif split == 'test':
+        pth = 'data/ODOR-v3/coco-style/annotations/instances_val2017.json'
+    else:
+        raise Exception
+
+    with open(pth) as f:
+        coco_anns = json.load(f)
+
+    records = []
+
+    imid_to_anns = {}
+    for ann in coco_anns['annotations']:
+        if ann['image_id'] not in imid_to_anns.keys():
+            imid_to_anns[ann['image_id']] = [ann]
+        else:
+            im_anns = imid_to_anns[ann['image_id']]
+            im_anns.append(ann)
+            imid_to_anns[ann['image_id']] = im_anns
+
+    for img in coco_anns['images']:
+        im_anns = imid_to_anns[img['id']]
+        for ann in im_anns:
+            ann['bbox_mode'] = BoxMode.XYWH_ABS
+            ann['segmentation'] = []
+        img['annotations'] = im_anns
+        records.append(img)
+
+    return records
+
 for split in ['train', 'test']:
-    MetadataCatalog.get(f'odor_{split}').thing_classes = ["abc,def"]
+    DatasetCatalog.register(f'odor_{split}', get_odor_dict(split))
+    MetadataCatalog.get(f'odor_{split}').set(thing_classes=["abc,def"])
