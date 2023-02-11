@@ -9,8 +9,7 @@
 #SBATCH -e /home/%u/logs/focaldino-%x-%j-on-%N.err
 #SBATCH --mail-type=ALL
 #Timelimit format: "hours:minutes:seconds" -- max is 24h
-#SBATCH --time=00:00:10
-#SBATCH --gres=gpu:q8000:1
+#SBATCH --time=00:05:00
 
 TMPDIR=/scratch/zinnen/$SLURM_JOB_ID
 
@@ -32,9 +31,10 @@ export DETECTRON2_DATASETS=./data/ODOR-v3/
 source /net/cluster/zinnen/miniconda/etc/profile.d/conda.sh
 conda activate detrex
 
-python tools/train_net.py --config-file projects/dino/configs/odor3_fn_l_lrf_384_fl4_4scale_12ep.py
+echo "starting train"
+python tools/train_net.py --config-file projects/dino/configs/odor3_fn_l_lrf_384_fl4_5scale_50ep.py
 #python tools/train.py $1 --work-dir /net/cluster/zinnen/mmdetection-workdirs/x101-64_8141041 --resume-from /net/cluster/zinnen/mmdetection-workdirs/x101-64_8141041/epoch_30.pth
 
 echo "done"
 
-#rm -rf $TMPDIR
+rm -rf $TMPDIR

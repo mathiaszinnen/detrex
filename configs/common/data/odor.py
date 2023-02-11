@@ -18,10 +18,9 @@ from detrex.data import DetrDatasetMapper
 
 dataloader = OmegaConf.create()
 
-register_coco_instances("odor_train", {}, 'data/ODOR-v3/coco-style/annotations/instances_train2017.json',
-                        'data/ODOR-v3/coco-style/train2017')
-register_coco_instances("odor_test", {}, 'data/ODOR-v3/coco-style/annotations/instances_val2017.json',
-                        'data/ODOR-v3/coco-style/val2017')
+print('register_coco_instances')
+register_coco_instances("odor_train", {}, 'data/ODOR-v3/coco-style/annotations/instances_train2017.json', 'data/ODOR-v3/coco-style/train2017')
+register_coco_instances("odor_test", {}, 'data/ODOR-v3/coco-style/annotations/instances_val2017.json', 'data/ODOR-v3/coco-style/val2017')
 
 dataloader.train = L(build_detection_train_loader)(
     dataset=L(get_detection_dataset_dicts)(names="odor_train"),
