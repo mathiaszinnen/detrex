@@ -38,6 +38,8 @@ from detectron2.utils.events import (
 )
 from detectron2.checkpoint import DetectionCheckpointer
 # from detrex.checkpoint import DetectionCheckpointer
+from detectron2.data.datasets import register_coco_instances
+import configs.common.data.odor
 
 from detrex.utils import WandbWriter
 from detrex.modeling import ema
