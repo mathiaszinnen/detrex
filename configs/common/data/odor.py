@@ -18,8 +18,10 @@ from detrex.data import DetrDatasetMapper
 
 dataloader = OmegaConf.create()
 
-register_coco_instances("odor_train", {}, 'data/ODOR-v3/coco-style/annotations/instances_train2017.json', 'data/ODOR-v3/coco-style/train2017')
-register_coco_instances("odor_test", {}, 'data/ODOR-v3/coco-style/annotations/instances_val2017.json', 'data/ODOR-v3/coco-style/val2017')
+register_coco_instances("odor_train", {}, 'data/ODOR-v3/coco-style/annotations/instances_train2017.json',
+                        'data/ODOR-v3/coco-style/train2017')
+register_coco_instances("odor_test", {}, 'data/ODOR-v3/coco-style/annotations/instances_val2017.json',
+                        'data/ODOR-v3/coco-style/val2017')
 
 dataloader.train = L(build_detection_train_loader)(
     dataset=L(get_detection_dataset_dicts)(names="odor_train"),
@@ -110,6 +112,7 @@ def get_odor_dict(split):
 
     return records
 
+
 for split in ['train', 'test']:
-    DatasetCatalog.register(f'odor_{split}', get_odor_dict(split))
+    DatasetCatalog.register(f'odor_{split}', lambda split=split: get_odor_dict(split))
     MetadataCatalog.get(f'odor_{split}').set(thing_classes=["abc,def"])
