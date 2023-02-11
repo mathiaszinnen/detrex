@@ -2,11 +2,11 @@ from detrex.config import get_config
 
 from .dino_focalnet_large_lrf_384_fl4_5scale_12ep import (
     train,
-    dataloader,
     optimizer,
     model,
 )
 
+dataloader = get_config("common/data/odor.py").dataloader
 model.num_classes=139
 
 # using 36ep scheduler

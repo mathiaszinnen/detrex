@@ -37,4 +37,4 @@ python tools/train_net.py --config-file projects/dino/configs/odor3_fn_l_lrf_384
 
 echo "done"
 
-rm -rf $TMPDIR
+#rm -rf $TMPDIR
