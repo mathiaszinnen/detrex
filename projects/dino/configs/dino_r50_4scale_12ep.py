@@ -7,9 +7,11 @@ optimizer = get_config("common/optim.py").AdamW
 lr_multiplier = get_config("common/coco_schedule.py").lr_multiplier_12ep
 train = get_config("common/train.py").train
 
+model.num_classes=139
+
 # modify training config
 train.init_checkpoint = "detectron2://ImageNetPretrained/torchvision/R-50.pkl"
-train.output_dir = "./output/dino_r50_4scale_12ep"
+train.output_dir = "./output/odor3-rn50"
 
 # max training iterations
 train.max_iter = 90000
