@@ -131,9 +131,9 @@ def get_odor_dict(split):
             ann['segmentation'] = []
             del ann['image_id']
         img['annotations'] = im_anns
+        img['image_id'] = img['id']
         records.append(img)
 
-    img['image_id'] = img['id']
     return records
 
 
