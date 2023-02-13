@@ -106,7 +106,7 @@ def get_odor_meta(split):
 def get_odor_dict(split):
     meta = get_odor_meta(split)
 
-    pth = meta['json_pth']
+    pth = meta['json_file']
     img_pth = meta['image_root']
 
     with open(pth) as f:
