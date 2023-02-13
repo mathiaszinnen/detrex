@@ -133,6 +133,7 @@ def get_odor_dict(split):
         img['annotations'] = im_anns
         records.append(img)
 
+    img['image_id'] = img['id']
     return records
 
 
