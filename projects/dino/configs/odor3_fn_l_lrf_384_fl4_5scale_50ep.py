@@ -19,8 +19,7 @@ train.max_iter = 50 * EPOCH_ITERS
 train.init_checkpoint = "/net/cluster/zinnen/models/focalnet_large_lrf_384_fl4.pth"
 train.output_dir = "./net/cluster/zinnen/detrex-output/odor3-tests"
 
-train.eval_period = 5
-# train.eval_period = EPOCH_ITERS
+train.eval_period = EPOCH_ITERS
 train.checkpointer.period = EPOCH_ITERS
 
 # using larger drop-path rate for longer training times
