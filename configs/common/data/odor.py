@@ -97,7 +97,7 @@ def get_odor_meta(split):
     class_names = [cat['name'] for cat in coco['categories']]
 
     return {
-        "json_pth": pth,
+        "json_file": pth,
         "image_root": img_pth,
         "class_names": class_names
     }
@@ -146,4 +146,4 @@ for split in ['train', 'test']:
     meta = get_odor_meta(split)
 
     MetadataCatalog.get(ds_name).set(
-        thing_classes=meta['class_names'], json_file=meta['json_path'], image_root=meta['image_root'], evaluator_tyoe='coco')
+        thing_classes=meta['class_names'], json_file=meta['json_file'], image_root=meta['image_root'], evaluator_tyoe='coco')
