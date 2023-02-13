@@ -129,6 +129,7 @@ def get_odor_dict(split):
         for ann in im_anns:
             ann['bbox_mode'] = BoxMode.XYWH_ABS
             ann['segmentation'] = []
+            del ann['image_id']
         img['annotations'] = im_anns
         records.append(img)
 
