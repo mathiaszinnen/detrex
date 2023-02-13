@@ -10,7 +10,6 @@ from detectron2.data import (
     build_detection_train_loader,
     get_detection_dataset_dicts, DatasetCatalog, MetadataCatalog,
 )
-from detectron2.data.datasets import register_coco_instances
 from detectron2.evaluation import COCOEvaluator
 from detectron2.structures import BoxMode
 
