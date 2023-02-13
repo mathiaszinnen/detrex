@@ -83,7 +83,7 @@ def get_odor_dict_test():
     return get_odor_dict('test')
 
 
-def get_odor_dict(split):
+def get_odor_meta(split):
     if split == 'train':
         pth = 'data/ODOR-v3/coco-style/annotations/instances_train2017.json'
         img_pth = 'data/ODOR-v3/coco-style/train2017'
@@ -92,6 +92,23 @@ def get_odor_dict(split):
         img_pth = 'data/ODOR-v3/coco-style/val2017'
     else:
         raise Exception
+
+    with open(pth) as f:
+        coco = json.load(f)
+    class_names = [cat['name'] for cat in coco['categories']]
+
+    return {
+        "json_pth": pth,
+        "image_root": img_pth,
+        "class_names": class_names
+    }
+
+
+def get_odor_dict(split):
+    meta = get_odor_meta(split)
+
+    pth = meta['json_pth']
+    img_pth = meta['image_root']
 
     with open(pth) as f:
         coco_anns = json.load(f)
@@ -119,17 +136,15 @@ def get_odor_dict(split):
     return records
 
 
-def get_classlist():
-    pth = 'data/ODOR-v3/coco-style/annotations/instances_train2017.json'
-    with open(pth) as f:
-        coco_anns = json.load(f)
-    cats = coco_anns['categories']
-    return [cat['name'] for cat in cats]
+DatasetCatalog.register('odor_train', get_odor_dict_train)
+DatasetCatalog.register('odor_test', get_odor_dict_test)
 
-
-DatasetCatalog.register(f'odor_train', get_odor_dict_train)
-DatasetCatalog.register(f'odor_test', get_odor_dict_test)
-
+meta_train = get_odor_meta('train')
+meta_test = get_odor_meta('test')
 
 for split in ['train', 'test']:
-    MetadataCatalog.get(f'odor_{split}').set(thing_classes=get_classlist())
+    ds_name = f'odor_{split}'
+    meta = get_odor_meta(split)
+
+    MetadataCatalog.get(ds_name).set(
+        thing_classes=meta['class_names'], json_file=meta['json_path'], image_root=meta['image_root'], evaluator_tyoe='coco')
