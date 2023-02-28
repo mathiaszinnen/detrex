@@ -1,6 +1,6 @@
 #!/bin/bash -l
-#SBATCH --time=00:20:20
-#SBATCH --gres=gpu:a100:1
+#SBATCH --time=23:59:59
+#SBATCH --gres=gpu:a100:8
 #SBATCH --job-name=focaldinotest
 #SBATCH --export=NONE
 
@@ -26,7 +26,7 @@ tar xf /home/janus/iwi5-datasets/odor3/odor3.tar -C ./data/ODOR-v3
 
 export DETECTRON2_DATASETS=./data/ODOR-v3/
 
-python tools/train_net.py --config-file projects/dino/configs/odor3_fn_l_lrf_384_fl4_5scale_50ep.py
+python tools/train_net.py --config-file projects/dino/configs/odor3_fn_l_lrf_384_fl4_5scale_50ep.py --num-gpus 8
 
 
 echo "train done"
