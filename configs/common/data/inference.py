@@ -17,40 +17,6 @@ from detrex.data import DetrDatasetMapper
 
 dataloader = OmegaConf.create()
 
-dataloader.train = L(build_detection_train_loader)(
-    dataset=L(get_detection_dataset_dicts)(names="odor_train"),
-    mapper=L(DetrDatasetMapper)(
-        augmentation=[
-            L(T.RandomFlip)(),
-            L(T.ResizeShortestEdge)(
-                short_edge_length=(480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800),
-                max_size=1333,
-                sample_style="choice",
-            ),
-        ],
-        augmentation_with_crop=[
-            L(T.RandomFlip)(),
-            L(T.ResizeShortestEdge)(
-                short_edge_length=(400, 500, 600),
-                sample_style="choice",
-            ),
-            L(T.RandomCrop)(
-                crop_type="absolute_range",
-                crop_size=(384, 600),
-            ),
-            L(T.ResizeShortestEdge)(
-                short_edge_length=(480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800),
-                max_size=1333,
-                sample_style="choice",
-            ),
-        ],
-        is_train=True,
-        mask_on=False,
-        img_format="RGB",
-    ),
-    total_batch_size=16,
-    num_workers=4,
-)
 
 dataloader.test = L(build_detection_test_loader)(
     dataset=L(get_detection_dataset_dicts)(names="odor_test", filter_empty=False),
@@ -72,10 +38,6 @@ dataloader.test = L(build_detection_test_loader)(
 dataloader.evaluator = L(COCOEvaluator)(
     dataset_name="${..test.dataset.names}",
 )
-
-
-def get_odor_dict_train():
-    return get_odor_dict('train')
 
 
 def get_odor_dict_test():
@@ -137,11 +99,8 @@ def get_odor_dict(split):
     return records
 
 
-DatasetCatalog.register('odor_train', get_odor_dict_train)
 DatasetCatalog.register('odor_test', get_odor_dict_test)
 
-meta_train = get_odor_meta('train')
-meta_test = get_odor_meta('test')
 
 for split in ['train', 'test']:
     ds_name = f'odor_{split}'

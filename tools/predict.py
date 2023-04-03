@@ -67,7 +67,7 @@ def main(args):
     out_folder = 'coco-predictions/detrex'
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
-    out_path = os.path.join(out_folder, 'odeuropa_40k_out_s3.json')
+    out_path = os.path.join(out_folder, 'odeuropa_40k_dummy.json')
 
     device = cfg.train.device
     model = instantiate(cfg.model)
@@ -78,7 +78,7 @@ def main(args):
 
     model.eval()
 
-    dataloader = instantiate(cfg.dataloader.test)
+    dataloader = instantiate(cfg.dataloader.inference)
 
     output = []
     index = 0

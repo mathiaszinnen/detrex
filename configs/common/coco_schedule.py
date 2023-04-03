@@ -68,6 +68,23 @@ def default_coco_scheduler(epochs=50, decay_epochs=40, warmup_epochs=0):
     )
 
 
+def odor_scheduler(epochs=50, decay_epochs=40, warmup_epochs=0, bs=16, epoch_iters=4260):
+    batch_iters = int(epoch_iters/bs)
+    total_steps = epochs * batch_iters
+    decay_steps = decay_epochs * batch_iters
+    warmup_steps = warmup_epochs * batch_iters
+
+    scheduler = L(MultiStepParamScheduler)(
+        values=[1.0, 0.1],
+        milestones=[decay_steps, total_steps],
+    )
+    return L(WarmupParamScheduler)(
+        scheduler=scheduler,
+        warmup_length=warmup_steps / total_steps,
+        warmup_method="linear",
+        warmup_factor=0.001,
+    )
+
 # default coco scheduler
 lr_multiplier_1x = default_X_scheduler(1)
 lr_multiplier_2x = default_X_scheduler(2)
@@ -85,3 +102,7 @@ lr_multiplier_12ep = default_coco_scheduler(12, 11, 0)
 # warmup scheduler for detr
 lr_multiplier_50ep_warmup = default_coco_scheduler(50, 40, 1e-3)
 lr_multiplier_12ep_warmup = default_coco_scheduler(12, 11, 1e-3)
+
+# odor warmup scheduler
+odor_multiplier_50ep = odor_scheduler(50,40,0)
+odor_multiplier_50ep_warmup = odor_scheduler(50,40,1e-3)

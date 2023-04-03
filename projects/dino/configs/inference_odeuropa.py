@@ -7,7 +7,7 @@ from .dino_focalnet_large_lrf_384_fl4_5scale_12ep import (
 
 EPOCH_ITERS = 4264
 
-dataloader = get_config("common/data/odeuropa_40k.py").dataloader
+dataloader = get_config("common/data/odeuropa.py").dataloader
 model.num_classes = 139
 
 # using 36ep scheduler
