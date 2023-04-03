@@ -69,8 +69,25 @@ dataloader.test = L(build_detection_test_loader)(
     num_workers=4,
 )
 
-dataloader.evaluator = L(COCOEvaluator)(
-    dataset_name="${..test.dataset.names}",
+# dataloader.evaluator = L(COCOEvaluator)(
+#     dataset_name="${..test.dataset.names}",
+# )
+
+dataloader.evaluator = L(build_detection_test_loader)(
+    dataset=L(get_detection_dataset_dicts)(names="odor_eval", filter_empty=False),
+    mapper=L(DetrDatasetMapper)(
+        augmentation=[
+            L(T.ResizeShortestEdge)(
+                short_edge_length=800,
+                max_size=1333,
+            ),
+        ],
+        augmentation_with_crop=None,
+        is_train=False,
+        mask_on=False,
+        img_format="RGB",
+    ),
+    num_workers=4,
 )
 
 
