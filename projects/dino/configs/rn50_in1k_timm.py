@@ -41,7 +41,7 @@ train.checkpointer.period = 10 * EPOCH_ITERS
 
 train.final_checkpoint = "/home/woody/iwi5/iwi5064h/backbone_ablation/rn50_in1k_timm/final"
 
-model.backbone.drop_path_rate = 0.4
+#model.backbone.drop_path_rate = 0.4
 
 # modify training configs
 train.init_checkpoint = ""
