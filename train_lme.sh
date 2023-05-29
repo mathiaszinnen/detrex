@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=12000
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:a100:1
 #SBATCH -o /home/%u/logs/focaldino-%x-%j-on-%N.out
 #SBATCH -e /home/%u/logs/focaldino-%x-%j-on-%N.err
 #SBATCH --mail-type=ALL
