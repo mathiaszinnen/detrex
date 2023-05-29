@@ -49,5 +49,5 @@ train.final_checkpoint = "/home/woody/iwi5/iwi5064h/backbone_ablation/rn50_in1k_
 # modify training configs
 train.init_checkpoint = "/home/vault/iwi5/iwi5064h/timm_weights/resnet50_a1_0-14fe96d1.pth"
 
-dataloader.train.total_batch_size = 4
-dataloader.train.num_workers = 4
+dataloader.train.total_batch_size = 1
+dataloader.train.num_workers = 2
