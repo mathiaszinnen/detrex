@@ -31,7 +31,10 @@ model.neck.in_features = ["p1", "p2", "p3"]
 
 lr_multiplier = get_config("common/coco_schedule.py").lr_multiplier_36ep
 
-EPOCH_ITERS = 4264
+
+N_SAMPLES_TRAIN = 4264
+BATCH_SIZE = 16
+EPOCH_ITERS = int(N_SAMPLES_TRAIN / BATCH_SIZE)
 
 dataloader = get_config("common/data/odor.py").dataloader
 model.num_classes = 139
