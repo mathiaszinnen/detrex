@@ -14,7 +14,7 @@ from detrex.modeling.backbone import TimmBackbone
 model.backbone = L(TimmBackbone)(
     model_name="resnet50",  # name in timm
     features_only=True,
-    pretrained=True,
+    pretrained=False,
     in_channels=3,
     out_indices=(1, 2, 3),
     norm_layer=FrozenBatchNorm2d,
@@ -46,4 +46,4 @@ train.final_checkpoint = "/home/woody/iwi5/iwi5064h/backbone_ablation/rn50_in1k_
 #model.backbone.drop_path_rate = 0.4
 
 # modify training configs
-train.init_checkpoint = ""
+train.init_checkpoint = "/home/vault/iwi5/iwi5064h/timm_weights/resnet50_a1_0-14fe96d1.pth"
