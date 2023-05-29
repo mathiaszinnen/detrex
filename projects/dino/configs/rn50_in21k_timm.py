@@ -15,7 +15,7 @@ from detrex.modeling.backbone import TimmBackbone
 model.backbone = L(TimmBackbone)(
     model_name="resnet50",  # name in timm
     features_only=True,
-    checkpoint_pth="/home/vault/iwi5/iwi5064h/timm_weights/resnet50_miil_21k.pth",
+    checkpoint_path="/home/vault/iwi5/iwi5064h/timm_weights/resnet50_miil_21k.pth",
     in_channels=3,
     out_indices=(1, 2, 3),
     norm_layer=FrozenBatchNorm2d,
