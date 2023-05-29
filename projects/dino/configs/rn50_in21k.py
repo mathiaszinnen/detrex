@@ -12,14 +12,14 @@ from .models.dino_r50 import model
 from detrex.modeling.backbone import TimmBackbone
 
 # modify backbone configs
-model.backbone = L(TimmBackbone)(
-    model_name="resnet50",  # name in timm
-    features_only=True,
-    checkpoint_path="/home/vault/iwi5/iwi5064h/timm_weights/resnet50_miil_21k.pth",
-    in_channels=3,
-    out_indices=(1, 2, 3),
-    norm_layer=FrozenBatchNorm2d,
-)
+# model.backbone = L(TimmBackbone)(
+#     model_name="resnet50",  # name in timm
+#     features_only=True,
+#     checkpoint_path="/home/vault/iwi5/iwi5064h/timm_weights/resnet50_miil_21k.pth",
+#     in_channels=3,
+#     out_indices=(1, 2, 3),
+#     norm_layer=FrozenBatchNorm2d,
+# )
 
 # modify neck configs
 model.neck.input_shapes = {
@@ -49,7 +49,7 @@ train.final_checkpoint = "/home/woody/iwi5/iwi5064h/backbone_ablation/rn50_in21k
 #model.backbone.drop_path_rate = 0.4
 
 # modify training configs
-#train.init_checkpoint = "/home/vault/iwi5/iwi5064h/timm_weights/resnet50_miil_21k.pth"
+train.init_checkpoint = "/home/vault/iwi5/iwi5064h/timm_weights/resnet50_miil_21k.pth"
 
 dataloader.train.total_batch_size = 16
 dataloader.train.num_workers = 8
