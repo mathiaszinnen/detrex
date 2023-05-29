@@ -33,7 +33,7 @@ lr_multiplier = get_config("common/coco_schedule.py").lr_multiplier_36ep
 
 
 N_SAMPLES_TRAIN = 4264
-BATCH_SIZE = 16
+BATCH_SIZE = 8
 EPOCH_ITERS = int(N_SAMPLES_TRAIN / BATCH_SIZE)
 
 dataloader = get_config("common/data/odor.py").dataloader
@@ -52,5 +52,5 @@ train.final_checkpoint = "/home/woody/iwi5/iwi5064h/backbone_ablation/rn50_in1k_
 # modify training configs
 train.init_checkpoint = "/home/vault/iwi5/iwi5064h/timm_weights/resnet50_a1_0-14fe96d1.pth"
 
-dataloader.train.total_batch_size = 16
-dataloader.train.num_workers = 8
+dataloader.train.total_batch_size = BATCH_SIZE
+dataloader.train.num_workers = 4

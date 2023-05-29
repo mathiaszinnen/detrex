@@ -15,7 +15,7 @@ from detrex.modeling.backbone import TimmBackbone
 model.backbone = L(TimmBackbone)(
     model_name="resnet50",  # name in timm
     features_only=True,
-    checkpoint_path="/home/vault/iwi5/iwi5064h/timm_weights/resnet50_miil_21k.pth",
+    pretrained=False,
     in_channels=3,
     out_indices=(1, 2, 3),
     norm_layer=FrozenBatchNorm2d,
@@ -32,7 +32,7 @@ model.neck.in_features = ["p1", "p2", "p3"]
 lr_multiplier = get_config("common/coco_schedule.py").lr_multiplier_36ep
 
 N_SAMPLES_TRAIN = 4264
-BATCH_SIZE = 16
+BATCH_SIZE = 8
 EPOCH_ITERS = int(N_SAMPLES_TRAIN / BATCH_SIZE)
 
 dataloader = get_config("common/data/odor.py").dataloader
@@ -49,7 +49,7 @@ train.final_checkpoint = "/home/woody/iwi5/iwi5064h/backbone_ablation/rn50_in21k
 #model.backbone.drop_path_rate = 0.4
 
 # modify training configs
-#train.init_checkpoint = "/home/vault/iwi5/iwi5064h/timm_weights/resnet50_miil_21k.pth"
+train.init_checkpoint = "/home/vault/iwi5/iwi5064h/timm_weights/resnet50_miil_21k_sd.pth"
 
-dataloader.train.total_batch_size = 16
-dataloader.train.num_workers = 8
+dataloader.train.total_batch_size = BATCH_SIZE
+dataloader.train.num_workers = 4
