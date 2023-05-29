@@ -27,11 +27,13 @@ model.neck.input_shapes = {
     "p3": ShapeSpec(channels=1024),
 }
 model.neck.in_features = ["p1", "p2", "p3"]
-model.num_classes = 139
 
 lr_multiplier = get_config("common/coco_schedule.py").lr_multiplier_36ep
 
 EPOCH_ITERS = 4264
+
+dataloader = get_config("common/data/odor.py").dataloader
+model.num_classes = 139
 
 train.max_iter = 50 * EPOCH_ITERS
 train.output_dir = "/home/woody/iwi5/iwi5064h/backbone_ablation/rn50_in1k_timm"
