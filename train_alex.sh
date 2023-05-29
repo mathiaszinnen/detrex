@@ -26,7 +26,7 @@ tar xf /home/janus/iwi5-datasets/odor3/odor3.tar -C ./data/ODOR-v3
 
 export DETECTRON2_DATASETS=./data/ODOR-v3/
 
-python tools/train_net.py --config-file projects/dino/configs/rn50_in1k_timm.py --num-gpus 8
+python tools/train_net.py --config-file projects/dino/configs/rn50_in21k_timm.py --num-gpus 8
 
 
 echo "train done"
