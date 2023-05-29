@@ -5,6 +5,7 @@ from detectron2.layers import FrozenBatchNorm2d
 
 from .dino_r50_4scale_12ep import (
     train,
+    optimizer,
 )
 from .models.dino_r50 import model
 
