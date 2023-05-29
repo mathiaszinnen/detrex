@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH --time=23:59:59
 #SBATCH --gres=gpu:a100:8
-#SBATCH --job-name=rn50_in1k
+#SBATCH --job-name=rn50_in21k
 #SBATCH --export=NONE
 
 unset SLURM_EXPORT_ENV
